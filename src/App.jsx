@@ -197,7 +197,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-gray-900 to-teal-900 flex flex-col relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/assets/images/bkg-large-light.png')] bg-no-repeat bg-center opacity-20 animate-[spin_190s_linear_infinite]" style={{ backgroundSize: '150%' }}></div>
+      <div className="absolute -top-1/2 -right-1/2 w-[200vmax] h-[200vmax] opacity-30 pointer-events-none">
+        <div 
+          className="w-full h-full bg-[url('/interstellar-bg.png')] bg-no-repeat bg-center"
+          style={{ 
+            backgroundSize: 'contain',
+            animation: 'spin-slow 190s linear infinite'
+          }}
+        ></div>
+      </div>
       <div className="relative z-10 flex flex-col min-h-screen">
       <Header onResetClick={resetData} />
 

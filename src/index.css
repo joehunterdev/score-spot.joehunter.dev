@@ -47,7 +47,7 @@
   --text-color: rgb(244, 255, 255);
   
   /* Interstellar Background */
-  --bg-interstellar: url('/assets/images/--bg-interstellar.png');
+  --bg-interstellar: url('/interstellar-bg.png');
   --bg-rotation-duration: 190s;
 }
 
@@ -86,6 +86,11 @@ body {
 }
 
 @keyframes rotate-interstellar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
