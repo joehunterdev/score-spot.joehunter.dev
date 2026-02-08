@@ -1,8 +1,8 @@
-import { Settings } from 'lucide-react'
+import { RotateCcw } from 'lucide-react'
 
-export function Header({ onSettingsClick }) {
+export function Header({ onResetClick }) {
   return (
-    <header className="h-16 border-b border-gray-700 px-6 bg-[var(--bg-form)] flex items-center justify-between z-10">
+    <header className="h-16 px-8 bg-black/80 flex items-center justify-between z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.35)]">
       <div className="flex items-center gap-3">
         <img 
           src="/logo_75.png" 
@@ -17,11 +17,11 @@ export function Header({ onSettingsClick }) {
         </div>
       </div>
       <button
-        className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-        onClick={onSettingsClick}
-        title="Settings"
+        className="p-2.5 hover:bg-red-900/50 rounded-md transition-colors text-red-400 hover:text-red-300"
+        onClick={onResetClick}
+        title="Reset All Data"
       >
-        <Settings className="w-5 h-5 text-gray-400" />
+        <RotateCcw className="w-5 h-5" />
       </button>
     </header>
   )

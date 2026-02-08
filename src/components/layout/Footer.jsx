@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="h-12 border-t border-gray-700 px-6 bg-[var(--bg-form)] flex items-center justify-center">
+    <footer className="h-12 px-8 bg-black/80 flex items-center justify-center shadow-[0_2px_5px_-2px_rgba(0,0,0,0.35)]">
       <p className="text-xs text-gray-500">
         © {new Date().getFullYear()} Score Spot by{' '}
         <a 

@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 220 40% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 174 96% 50%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 262 32% 59%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 30% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 174 96% 50%;
+    --radius: 0.5rem;
+  }
+}
+
 /* Joe Hunter Brand Tokens */
 :root {
   /* Brand Colors */
@@ -22,15 +47,15 @@
   --text-color: rgb(244, 255, 255);
   
   /* Interstellar Background */
-  --bg-interstellar: url('/assets/images/bkg-large-light.png');
+  --bg-interstellar: url('/assets/images/--bg-interstellar.png');
   --bg-rotation-duration: 190s;
 }
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 body {
   margin: 0;

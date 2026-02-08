@@ -14,5 +14,7 @@ add criterion items
 
 - Use tabbed browsing or accordian or any good mobile ui features 
 
+- theres no way to just close the apartment in creation to move on to another 
+
 take this and add it as background, inner cards should be similar transparency level
 <div class="container-gradient background-conic-multi"></div>
