@@ -13,3 +13,6 @@ Add core requirements like budget, rooms, living space, location
 add criterion items
 
 - Use tabbed browsing or accordian or any good mobile ui features 
+
+take this and add it as background, inner cards should be similar transparency level
+<div class="container-gradient background-conic-multi"></div>
