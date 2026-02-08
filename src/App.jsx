@@ -221,23 +221,23 @@ function App() {
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-900 via-[var(--bg-dark)] to-gray-900">
-          <div className="max-w-6xl mx-auto p-6"
+          <div className="max-w-6xl mx-auto p-6">
 
-        {/* Criteria Tab */}
-        {activeTab === 'criteria' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-white">Scoring Criteria</h1>
-                <p className="text-gray-400 mt-1">Define what matters most when choosing an apartment</p>
-              </div>
-            </div>
+            {/* Criteria Tab */}
+            {activeTab === 'criteria' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold text-white">Scoring Criteria</h1>
+                    <p className="text-gray-400 mt-1">Define what matters most when choosing an apartment</p>
+                  </div>
+                </div>
 
-            <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 overflow-hidden">
-              <div className="p-6 space-y-3">
-                {criteria.map(criterion => (
-                  <div key={criterion.id} className="flex items-center justify-between bg-[var(--bg-dark)] p-4 rounded-lg hover:bg-opacity-80 transition-all">
-                    <label className="flex items-center gap-3 flex-1 cursor-pointer">
+                <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 overflow-hidden">
+                  <div className="p-6 space-y-3">
+                    {criteria.map(criterion => (
+                      <div key={criterion.id} className="flex items-center justify-between bg-[var(--bg-dark)] p-4 rounded-lg hover:bg-opacity-80 transition-all">
+                        <label className="flex items-center gap-3 flex-1 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={criterion.critical}
@@ -290,60 +290,62 @@ function App() {
               </div>
             </div>
           </div>
-        )}        {/* Scoring/Apartments Tab */}
-        {activeTab === 'scoring' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-white">Apartments</h1>
-                <p className="text-gray-400 mt-1">Score and compare your options</p>
-              </div>
-              {apartments.length > 0 && (
-                <button 
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all text-sm font-medium"
-                  onClick={resetData}
-                >
-                  Reset All Data
-                </button>
-              )}
-            </div>
+            )}
+            
+            {/* Scoring/Apartments Tab */}
+            {activeTab === 'scoring' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold text-white">Apartments</h1>
+                    <p className="text-gray-400 mt-1">Score and compare your options</p>
+                  </div>
+                  {apartments.length > 0 && (
+                    <button 
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all text-sm font-medium"
+                      onClick={resetData}
+                    >
+                      Reset All Data
+                    </button>
+                  )}
+                </div>
 
-            {/* Add Apartment Form */}
-            <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Add New Apartment</h3>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={newApartmentName}
-                  onChange={(e) => setNewApartmentName(e.target.value)}
-                  placeholder="Apartment name or address"
-                  onKeyPress={(e) => e.key === 'Enter' && addApartment()}
-                  className="flex-1 px-4 py-3 bg-[var(--bg-dark)] border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)]"
-                />
-                <button 
-                  onClick={addApartment}
-                  className="px-8 py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl"
-                >
-                  Add Apartment
-                </button>
-              </div>
-            </div>
+                {/* Add Apartment Form */}
+                <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Add New Apartment</h3>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={newApartmentName}
+                      onChange={(e) => setNewApartmentName(e.target.value)}
+                      placeholder="Apartment name or address"
+                      onKeyPress={(e) => e.key === 'Enter' && addApartment()}
+                      className="flex-1 px-4 py-3 bg-[var(--bg-dark)] border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)]"
+                    />
+                    <button 
+                      onClick={addApartment}
+                      className="px-8 py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl"
+                    >
+                      Add Apartment
+                    </button>
+                  </div>
+                </div>
 
-            {/* Apartments Grid */}
-            {apartments.length === 0 ? (
-              <div className="text-center py-20 bg-[var(--bg-form)] rounded-xl border border-gray-700">
-                <Home className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 text-lg">No apartments added yet</p>
-                <p className="text-gray-500 text-sm mt-2">Add your first apartment above to start scoring</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {apartments.map(apartment => (
-                  <div key={apartment.id} className="bg-[var(--bg-form)] rounded-xl border border-gray-700 overflow-hidden hover:border-[var(--brand-primary)] transition-all">
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <h3 className="text-xl font-bold text-white flex-1">{apartment.name}</h3>
-                        <button 
+                {/* Apartments Grid */}
+                {apartments.length === 0 ? (
+                  <div className="text-center py-20 bg-[var(--bg-form)] rounded-xl border border-gray-700">
+                    <Home className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-400 text-lg">No apartments added yet</p>
+                    <p className="text-gray-500 text-sm mt-2">Add your first apartment above to start scoring</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    {apartments.map(apartment => (
+                      <div key={apartment.id} className="bg-[var(--bg-form)] rounded-xl border border-gray-700 overflow-hidden hover:border-[var(--brand-primary)] transition-all">
+                        <div className="p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <h3 className="text-xl font-bold text-white flex-1">{apartment.name}</h3>
+                            <button 
                           className="text-red-400 hover:text-red-300 text-2xl leading-none ml-3 hover:bg-red-900/20 rounded px-2 transition-all"
                           onClick={() => deleteApartment(apartment.id)}
                           title="Delete apartment"
@@ -390,25 +392,25 @@ function App() {
                       />
                     </div>
                   </div>
-                ))}
+                    ))}
+                  </div>
+                )}
               </div>
             )}
-          </div>
-        )}
 
-        {/* Ranking Tab */}
-        {activeTab === 'ranking' && (
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-white">Rankings</h1>
-              <p className="text-gray-400 mt-1">Compare all apartments at a glance</p>
-            </div>
-            
-            <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 p-6">
-              <RankingView apartments={apartments} criteria={criteria} />
-            </div>
-          </div>
-        )}
+            {/* Ranking Tab */}
+            {activeTab === 'ranking' && (
+              <div className="space-y-6">
+                <div>
+                  <h1 className="text-3xl font-bold text-white">Rankings</h1>
+                  <p className="text-gray-400 mt-1">Compare all apartments at a glance</p>
+                </div>
+                
+                <div className="bg-[var(--bg-form)] rounded-xl border border-gray-700 p-6">
+                  <RankingView apartments={apartments} criteria={criteria} />
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
