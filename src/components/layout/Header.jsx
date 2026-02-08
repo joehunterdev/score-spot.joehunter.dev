@@ -2,7 +2,7 @@ import { RotateCcw } from 'lucide-react'
 
 export function Header({ onResetClick }) {
   return (
-    <header className="h-16 px-8 bg-black/80 flex items-center justify-between z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.35)]">
+    <header className="h-16 px-8 bg-black/80 flex items-center justify-between z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.35)] rounded-b-lg">
       <div className="flex items-center gap-3">
         <img 
           src="/logo_75.png" 

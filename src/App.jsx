@@ -196,20 +196,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-gray-900 to-teal-900 flex flex-col relative overflow-hidden">
-      <div className="absolute -top-1/2 -right-1/2 w-[200vmax] h-[200vmax] opacity-30 pointer-events-none">
-        <div 
-          className="w-full h-full bg-[url('/interstellar-bg.png')] bg-no-repeat bg-center"
-          style={{ 
-            backgroundSize: 'contain',
-            animation: 'spin-slow 190s linear infinite'
-          }}
-        ></div>
-      </div>
-      <div className="relative z-10 flex flex-col min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-gray-900 to-teal-900 flex flex-col">
       <Header onResetClick={resetData} />
 
-      <main className="flex-1 container mx-auto px-3 md:px-6 py-8 w-full max-w-[98vw] md:max-w-[95vw]">
+      <main className="flex-1 px-3 md:px-6 py-8">
         <Tabs defaultValue="apartments" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6 bg-black/60 rounded-lg p-1">
             <TabsTrigger value="apartments" className="gap-2">
@@ -435,7 +425,6 @@ function App() {
       </main>
 
       <Footer />
-      </div>
     </div>
   )
 }
