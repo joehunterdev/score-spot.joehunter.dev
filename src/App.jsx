@@ -34,10 +34,13 @@ function App() {
   const [newCriterionName, setNewCriterionName] = useState('')
   const [newCriterionCritical, setNewCriterionCritical] = useState(false)
   const [expandedApartments, setExpandedApartments] = useState(new Set())
+  const [budgetMin, setBudgetMin] = useState(500)
+  const [budgetMax, setBudgetMax] = useState(3000)
 
   useEffect(() => {
     const storedCriteria = localStorage.getItem('apartmentCriteria')
     const storedApartments = localStorage.getItem('apartments')
+    const storedBudgetConfig = localStorage.getItem('budgetConfig')
     
     if (storedCriteria) {
       setCriteria(JSON.parse(storedCriteria))
@@ -47,6 +50,12 @@ function App() {
     
     if (storedApartments) {
       setApartments(JSON.parse(storedApartments))
+    }
+    
+    if (storedBudgetConfig) {
+      const config = JSON.parse(storedBudgetConfig)
+      setBudgetMin(config.min)
+      setBudgetMax(config.max)
     }
   }, [])
 
@@ -61,6 +70,10 @@ function App() {
       localStorage.setItem('apartments', JSON.stringify(apartments))
     }
   }, [apartments])
+
+  useEffect(() => {
+    localStorage.setItem('budgetConfig', JSON.stringify({ min: budgetMin, max: budgetMax }))
+  }, [budgetMin, budgetMax])
 
   const addApartment = () => {
     if (!newApartmentName.trim()) return
@@ -215,6 +228,33 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="space-y-4 pb-4 border-b border-gray-700">
+                  <h3 className="text-lg font-semibold text-primary">Budget Configuration</h3>
+                  <p className="text-sm text-muted-foreground">Set your budget range to help score rent prices automatically</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="budgetMin">Minimum Budget ($)</Label>
+                      <Input
+                        id="budgetMin"
+                        type="number"
+                        value={budgetMin}
+                        onChange={(e) => setBudgetMin(parseInt(e.target.value) || 0)}
+                        placeholder="500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="budgetMax">Maximum Budget ($)</Label>
+                      <Input
+                        id="budgetMax"
+                        type="number"
+                        value={budgetMax}
+                        onChange={(e) => setBudgetMax(parseInt(e.target.value) || 0)}
+                        placeholder="3000"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="space-y-2">
                   {criteria.map(criterion => (
                     <div key={criterion.id} className="flex items-center justify-between p-4 bg-muted">
