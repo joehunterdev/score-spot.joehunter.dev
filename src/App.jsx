@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { Header, Footer } from './components/layout'
+import { ApartmentDetails } from './components/ApartmentDetails'
 import './App.css'
 
 const DEFAULT_CRITERIA = [
@@ -64,7 +66,11 @@ function App() {
       scores: criteria.reduce((acc, criterion) => {
         acc[criterion.id] = 5; // Default score of 5 out of 10
         return acc;
-      }, {})
+      }, {}),
+      budget: '',
+      externalLink: '',
+      notes: '',
+      exclusions: []
     };
     
     setApartments([...apartments, newApartment]);
@@ -87,6 +93,12 @@ function App() {
       }
       return apt;
     }));
+  };
+
+  const updateApartment = (updatedApartment) => {
+    setApartments(apartments.map(apt => 
+      apt.id === updatedApartment.id ? updatedApartment : apt
+    ));
   };
 
   const toggleCritical = (criterionId) => {
@@ -153,33 +165,33 @@ function App() {
     }
   };
 
-  return (
-    <div className="app">
-      <header>
-        <h1>🏠 SpotScore</h1>
-        <p>Score and compare apartments based on your criteria</p>
-      </header>
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
-      <div className="container">
+  return (
+    <div className="background-interstellar flex flex-col">
+      <Header onSettingsClick={() => setSettingsOpen(!settingsOpen)} />
+
+      <main className="container mx-auto px-4 py-8 flex-1">
         {/* Criteria Management Section */}
-        <section className="criteria-section">
-          <h2>Scoring Criteria</h2>
-          <div className="criteria-list">
+        <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
+          <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Scoring Criteria</h2>
+          <div className="space-y-2 mb-4">
             {criteria.map(criterion => (
-              <div key={criterion.id} className="criterion-item">
-                <label>
+              <div key={criterion.id} className="flex items-center justify-between bg-[var(--bg-dark)] p-3 rounded-md">
+                <label className="flex items-center gap-2 flex-1 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={criterion.critical}
                     onChange={() => toggleCritical(criterion.id)}
+                    className="w-4 h-4 accent-[var(--brand-primary)]"
                   />
-                  <span className={criterion.critical ? 'critical' : ''}>
+                  <span className={`${criterion.critical ? 'text-[var(--brand-primary)] font-semibold' : 'text-gray-300'}`}>
                     {criterion.name}
                     {criterion.critical && ' ⭐'}
                   </span>
                 </label>
                 <button 
-                  className="delete-btn small"
+                  className="text-red-400 hover:text-red-300 text-xl px-2"
                   onClick={() => deleteCriterion(criterion.id)}
                   title="Delete criterion"
                 >
@@ -189,62 +201,80 @@ function App() {
             ))}
           </div>
           
-          <div className="add-form">
+          <div className="flex gap-2 flex-wrap">
             <input
               type="text"
               value={newCriterionName}
               onChange={(e) => setNewCriterionName(e.target.value)}
               placeholder="New criterion name"
               onKeyPress={(e) => e.key === 'Enter' && addCriterion()}
+              className="flex-1 min-w-[200px] px-4 py-2 bg-[var(--bg-dark)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)]"
             />
-            <label className="checkbox-label">
+            <label className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-dark)] border border-gray-700 rounded-md cursor-pointer">
               <input
                 type="checkbox"
                 checked={newCriterionCritical}
                 onChange={(e) => setNewCriterionCritical(e.target.checked)}
+                className="w-4 h-4 accent-[var(--brand-primary)]"
               />
-              Critical
+              <span className="text-gray-300">Critical</span>
             </label>
-            <button onClick={addCriterion}>Add Criterion</button>
+            <button 
+              onClick={addCriterion}
+              className="px-6 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-md transition-colors"
+            >
+              Add Criterion
+            </button>
           </div>
         </section>
 
         {/* Add Apartment Section */}
-        <section className="add-apartment-section">
-          <h2>Add New Apartment</h2>
-          <div className="add-form">
+        <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
+          <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Add New Apartment</h2>
+          <div className="flex gap-2">
             <input
               type="text"
               value={newApartmentName}
               onChange={(e) => setNewApartmentName(e.target.value)}
               placeholder="Apartment name or address"
               onKeyPress={(e) => e.key === 'Enter' && addApartment()}
+              className="flex-1 px-4 py-2 bg-[var(--bg-dark)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)]"
             />
-            <button onClick={addApartment}>Add Apartment</button>
+            <button 
+              onClick={addApartment}
+              className="px-6 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-md transition-colors"
+            >
+              Add Apartment
+            </button>
           </div>
         </section>
 
         {/* Apartments List */}
-        <section className="apartments-section">
-          <div className="section-header">
-            <h2>Apartments ({apartments.length})</h2>
+        <section className="bg-[var(--bg-form)] rounded-lg p-6 border border-gray-700">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold text-[var(--brand-primary)]">
+              Apartments ({apartments.length})
+            </h2>
             {apartments.length > 0 && (
-              <button className="reset-btn" onClick={resetData}>
+              <button 
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
+                onClick={resetData}
+              >
                 Reset All Data
               </button>
             )}
           </div>
           
           {apartments.length === 0 ? (
-            <p className="empty-state">No apartments added yet. Add one above to get started!</p>
+            <p className="text-center text-gray-400 py-8">No apartments added yet. Add one above to get started!</p>
           ) : (
-            <div className="apartments-grid">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {apartments.map(apartment => (
-                <div key={apartment.id} className="apartment-card">
-                  <div className="apartment-header">
-                    <h3>{apartment.name}</h3>
+                <div key={apartment.id} className="bg-[var(--bg-dark)] rounded-lg p-5 border border-gray-700">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-white">{apartment.name}</h3>
                     <button 
-                      className="delete-btn"
+                      className="text-red-400 hover:text-red-300 text-2xl leading-none"
                       onClick={() => deleteApartment(apartment.id)}
                       title="Delete apartment"
                     >
@@ -252,43 +282,54 @@ function App() {
                     </button>
                   </div>
                   
-                  <div className="total-score">
-                    <div className="score-circle">
+                  <div className="flex flex-col items-center mb-4 py-4 bg-[var(--bg-form)] rounded-lg">
+                    <div className="text-5xl font-bold text-[var(--brand-primary)]">
                       {calculateTotalScore(apartment)}%
                     </div>
-                    <span className="score-label">Overall Score</span>
+                    <span className="text-sm text-gray-400 mt-1">Overall Score</span>
                   </div>
                   
-                  <div className="scores-list">
+                  <div className="space-y-3">
                     {criteria.map(criterion => (
-                      <div key={criterion.id} className="score-item">
-                        <label className={criterion.critical ? 'critical' : ''}>
-                          {criterion.name}
-                          {criterion.critical && ' ⭐'}
-                        </label>
+                      <div key={criterion.id} className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <label className={`text-sm ${criterion.critical ? 'text-[var(--brand-primary)] font-semibold' : 'text-gray-300'}`}>
+                            {criterion.name}
+                            {criterion.critical && ' ⭐'}
+                          </label>
+                          <span className="text-sm font-semibold text-[var(--brand-secondary)]">
+                            {apartment.scores[criterion.id] || 5}/10
+                          </span>
+                        </div>
                         <input
                           type="range"
                           min="0"
                           max="10"
                           value={apartment.scores[criterion.id] || 5}
                           onChange={(e) => updateScore(apartment.id, criterion.id, e.target.value)}
+                          className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[var(--brand-primary)]"
                         />
-                        <span className="score-value">
-                          {apartment.scores[criterion.id] || 5}/10
-                        </span>
                       </div>
                     ))}
                   </div>
+
+                  <ApartmentDetails 
+                    apartment={apartment}
+                    onUpdate={updateApartment}
+                  />
                 </div>
               ))}
             </div>
           )}
         </section>
-      </div>
 
-      <footer>
-        <p>⭐ = Critical criteria (weighted 2x in overall score)</p>
-      </footer>
+        {/* Info Footer Note */}
+        <div className="mt-6 text-center text-sm text-gray-500">
+          <p>⭐ = Critical criteria (weighted 2x in overall score)</p>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   )
 }

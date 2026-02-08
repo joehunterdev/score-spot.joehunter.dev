@@ -1,8 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Joe Hunter Brand Tokens */
+:root {
+  /* Brand Colors */
+  --brand-primary: #03f8bd;
+  --brand-secondary: #8869b4;
+  --brand-tertiary: #634c82;
+  
+  /* Semantic Colors */
+  --color-success: #03f8bd;
+  --color-warning: #634c82;
+  --color-danger: #8869b4;
+  
+  /* Backgrounds */
+  --bg-dark: #333333;
+  --bg-navbar: rgba(0, 0, 0, 0.8);
+  --bg-form: #444444;
+  
+  /* Typography */
+  --font-primary: 'Titillium Web', 'Helvetica Neue', Arial, sans-serif;
+  --text-color: rgb(244, 255, 255);
+  
+  /* Interstellar Background */
+  --bg-interstellar: url('/assets/images/bkg-large-light.png');
+  --bg-rotation-duration: 190s;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-dark);
+  color: var(--text-color);
+}
+
+/* Interstellar Background Effect */
+.background-interstellar {
+  position: relative;
+  min-height: 100vh;
+}
+
+.background-interstellar::before {
+  content: "";
+  position: fixed;
+  width: 2500px;
+  height: 2500px;
+  top: -70%;
+  left: -15%;
+  z-index: -1;
+  background: transparent var(--bg-interstellar) no-repeat center center;
+  animation: rotate-interstellar var(--bg-rotation-duration) linear infinite;
+}
+
+@keyframes rotate-interstellar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
