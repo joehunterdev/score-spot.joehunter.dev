@@ -257,56 +257,57 @@ function App() {
             </button>
           </div>
         </section>
+        )}
 
         {/* Scoring/Apartments Tab */}
         {activeTab === 'scoring' && (
           <>
             {/* Add Apartment Section */}
             <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
-          <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Add New Apartment</h2>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={newApartmentName}
-              onChange={(e) => setNewApartmentName(e.target.value)}
-              placeholder="Apartment name or address"
-              onKeyPress={(e) => e.key === 'Enter' && addApartment()}
-              className="flex-1 px-4 py-2 bg-[var(--bg-dark)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)]"
-            />
-            <button 
-              onClick={addApartment}
-              className="px-6 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-md transition-colors"
-            >
-              Add Apartment
-            </button>
-          </div>
-        </section>
+              <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Add New Apartment</h2>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newApartmentName}
+                  onChange={(e) => setNewApartmentName(e.target.value)}
+                  placeholder="Apartment name or address"
+                  onKeyPress={(e) => e.key === 'Enter' && addApartment()}
+                  className="flex-1 px-4 py-2 bg-[var(--bg-dark)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-[var(--brand-primary)]"
+                />
+                <button 
+                  onClick={addApartment}
+                  className="px-6 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-secondary)] text-gray-900 font-semibold rounded-md transition-colors"
+                >
+                  Add Apartment
+                </button>
+              </div>
+            </section>
 
-        {/* Apartments List */}
-        <section className="bg-[var(--bg-form)] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold text-[var(--brand-primary)]">
-              Apartments ({apartments.length})
-            </h2>
-            {apartments.length > 0 && (
-              <button 
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
-                onClick={resetData}
-              >
-                Reset All Data
-              </button>
-            )}
-          </div>
-          
-          {apartments.length === 0 ? (
-            <p className="text-center text-gray-400 py-8">No apartments added yet. Add one above to get started!</p>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {apartments.map(apartment => (
-                <div key={apartment.id} className="bg-[var(--bg-dark)] rounded-lg p-5 border border-gray-700">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">{apartment.name}</h3>
-                    <button 
+            {/* Apartments List */}
+            <section className="bg-[var(--bg-form)] rounded-lg p-6 border border-gray-700">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold text-[var(--brand-primary)]">
+                  Apartments ({apartments.length})
+                </h2>
+                {apartments.length > 0 && (
+                  <button 
+                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
+                    onClick={resetData}
+                  >
+                    Reset All Data
+                  </button>
+                )}
+              </div>
+              
+              {apartments.length === 0 ? (
+                <p className="text-center text-gray-400 py-8">No apartments added yet. Add one above to get started!</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {apartments.map(apartment => (
+                    <div key={apartment.id} className="bg-[var(--bg-dark)] rounded-lg p-5 border border-gray-700">
+                      <div className="flex items-start justify-between mb-4">
+                        <h3 className="text-xl font-semibold text-white">{apartment.name}</h3>
+                        <button 
                       className="text-red-400 hover:text-red-300 text-2xl leading-none"
                       onClick={() => deleteApartment(apartment.id)}
                       title="Delete apartment"
@@ -346,20 +347,20 @@ function App() {
                     ))}
                   </div>
 
-                  <ApartmentDetails 
-                    apartment={apartment}
-                    onUpdate={updateApartment}
-                  />
+                      <ApartmentDetails 
+                        apartment={apartment}
+                        onUpdate={updateApartment}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-        </section>
+              )}
+            </section>
 
-        {/* Info Footer Note */}
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>⭐ = Critical criteria (weighted 2x in overall score)</p>
-        </div>
+            {/* Info Footer Note */}
+            <div className="mt-6 text-center text-sm text-gray-500">
+              <p>⭐ = Critical criteria (weighted 2x in overall score)</p>
+            </div>
           </>
         )}
 
