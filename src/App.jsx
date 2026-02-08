@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Home, ListChecks, BarChart3 } from 'lucide-react'
 import { Header, Footer } from './components/layout'
 import { ApartmentDetails } from './components/ApartmentDetails'
-import './App.css'
+import { RankingView } from './components/RankingView'
 
 const DEFAULT_CRITERIA = [
   { id: 1, name: 'Rent Price', critical: true },
@@ -21,6 +22,7 @@ const DEFAULT_CRITERIA = [
 ];
 
 function App() {
+  const [activeTab, setActiveTab] = useState('scoring') // 'scoring', 'criteria', 'ranking'
   const [criteria, setCriteria] = useState([]);
   const [apartments, setApartments] = useState([]);
   const [newApartmentName, setNewApartmentName] = useState('');
@@ -167,14 +169,42 @@ function App() {
 
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  const tabs = [
+    { id: 'scoring', name: 'Apartments', icon: Home },
+    { id: 'criteria', name: 'Criteria', icon: ListChecks },
+    { id: 'ranking', name: 'Rankings', icon: BarChart3 },
+  ]
+
   return (
-    <div className="background-interstellar flex flex-col">
+    <div className="background-interstellar flex flex-col min-h-screen">
       <Header onSettingsClick={() => setSettingsOpen(!settingsOpen)} />
 
-      <main className="container mx-auto px-4 py-8 flex-1">
-        {/* Criteria Management Section */}
-        <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
-          <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Scoring Criteria</h2>
+      <main className="container mx-auto px-4 py-6 flex-1 max-w-7xl">
+        {/* Tab Navigation */}
+        <div className="flex gap-2 mb-6 bg-[var(--bg-form)] p-2 rounded-lg border border-gray-700">
+          {tabs.map((tab) => {
+            const Icon = tab.icon
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-md font-semibold transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-[var(--brand-primary)] text-gray-900'
+                    : 'text-gray-400 hover:text-white hover:bg-[var(--bg-dark)]'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="hidden sm:inline">{tab.name}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Criteria Tab */}
+        {activeTab === 'criteria' && (
+          <section className="bg-[var(--bg-form)] rounded-lg p-6 border border-gray-700">
+            <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Scoring Criteria</h2>
           <div className="space-y-2 mb-4">
             {criteria.map(criterion => (
               <div key={criterion.id} className="flex items-center justify-between bg-[var(--bg-dark)] p-3 rounded-md">
@@ -228,8 +258,11 @@ function App() {
           </div>
         </section>
 
-        {/* Add Apartment Section */}
-        <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
+        {/* Scoring/Apartments Tab */}
+        {activeTab === 'scoring' && (
+          <>
+            {/* Add Apartment Section */}
+            <section className="bg-[var(--bg-form)] rounded-lg p-6 mb-6 border border-gray-700">
           <h2 className="text-2xl font-semibold text-[var(--brand-primary)] mb-4">Add New Apartment</h2>
           <div className="flex gap-2">
             <input
@@ -327,6 +360,15 @@ function App() {
         <div className="mt-6 text-center text-sm text-gray-500">
           <p>⭐ = Critical criteria (weighted 2x in overall score)</p>
         </div>
+          </>
+        )}
+
+        {/* Ranking Tab */}
+        {activeTab === 'ranking' && (
+          <section className="bg-[var(--bg-form)] rounded-lg p-6 border border-gray-700">
+            <RankingView apartments={apartments} criteria={criteria} />
+          </section>
+        )}
       </main>
 
       <Footer />
